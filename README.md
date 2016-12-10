@@ -44,8 +44,7 @@ A command utility that runs your job and sends email to you when it's done.
 	```
 	copy mail-exec.rc.example etc/mail-exec.rc
 	```
-
-	**Note: ** The send_from email address must be same as your authorization email address configured at `/etc/ssmtp/ssmtp.conf`
+	*Note: *  Change the the setting in `.rc` file. The send_from email address must be same as your authorization email address configured at `/etc/ssmtp/ssmtp.conf`
 
 ### Usage
 * Now you can execute your command with mail-exec as prefix:
