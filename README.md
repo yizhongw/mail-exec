@@ -54,6 +54,9 @@ nohub mail-exec python3 test.py > nohub.out &
 ```
 
 You will receive a success email if your program is done successfully:
-![](/home/yizhong/Workspace/Tool/mail-exec/success.png) 
+![](https://github.com/EastonWang/mail-exec/blob/master/success.png) 
 Of course, you will get a fail message if your program fails:
-![](/home/yizhong/Workspace/Tool/mail-exec/fail.png) 
+![](https://github.com/EastonWang/mail-exec/blob/master/fail.png) 
+
+-----
+### Have fun and welcome pr!
