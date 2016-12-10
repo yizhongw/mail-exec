@@ -1,0 +1,27 @@
+#!/bin/bash
+
+[[ -f /etc/mail-exec.rc ]] && . /etc/mail-exec.rc
+[[ -f ~/.mail-exec.rc ]] && . ~/.mail-exec.rc
+[[ -z "$send_from" ]] && { echo -n "Your smtp authorization email adress (find it at /etc/ssmtp/ssmtp.conf): " >&2; read send_from; }
+[[ -z "$send_to" ]] && { echo -n "Email address you want to notify: " >&2; read send_to;}
+
+# Message template
+SuccessMsg="Your program with command \"$1\" and pid $$ succeeded on your machine \"`hostname`\""
+FailMsg="Your program with command \"$1\" and pid $$ failed on your machine \"`hostname`\""
+
+# help message
+USAGE="Usage: $0 [COMMAND]"
+
+if [ $# == 0 ]
+then
+    echo -e $USAGE
+    exit
+fi
+
+
+if sh -c "$*"
+then
+    printf "From: $send_from\nTo: $send_to\nSubject: $SuccessMsg\n" | ssmtp -t
+else
+    printf "From: $send_from\nTo: $send_to\nSubject: $FailMsg\n" | ssmtp -t
+fi

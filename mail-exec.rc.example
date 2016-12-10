@@ -1,0 +1,2 @@
+send_from=#your smtp email address configured at /etc/ssmtp/ssmtp.conf
+send_to=#the email address you want to notify
