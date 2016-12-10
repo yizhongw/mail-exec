@@ -48,20 +48,20 @@ A command utility that runs your job and sends email to you when it's done.
 	**Note: ** The send_from email address must be same as your authorization email address configured at `/etc/ssmtp/ssmtp.conf`
 
 ### Usage
-Now you can execute your command with mail-exec as prefix:
-```
-mail-exec python3 test.py
-```
+* Now you can execute your command with mail-exec as prefix:
+	```
+	mail-exec python3 test.py
+	```
 
-You can also run your command on backgroud with [nohub](https://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html) :
-```
-nohub mail-exec python3 test.py > nohub.out &
-```
+* You can also run your command on backgroud with [nohub](https://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html) :
+	```
+	nohub mail-exec python3 test.py > nohub.out &
+	```
 
-You will receive a success email if your program is done successfully:
+* You will receive a success email if your program is done successfully:
 ![](https://github.com/EastonWang/mail-exec/blob/master/success.png) 
 
-Of course, you will get a fail message if your program fails:
+* Of course, you will get a fail message if your program fails:
 ![](https://github.com/EastonWang/mail-exec/blob/master/fail.png) 
 
 -----
