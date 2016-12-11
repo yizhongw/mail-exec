@@ -15,15 +15,13 @@ then
 fi
 
 # execute and send email
-if ("$@" 2>/tmp/mail-exec.err)
+if output=$("$@" 2>&1)
 then
     Subject="Command succeeded: $@"
-    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\n"
+    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\n $output"
 else
     Subject="Command failed: $@"
-    err_msg=$(</tmp/mail-exec.err)
-    printf "$err_msg\n" >&2
-    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\nError details:\n$err_msg\n"
+    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\nError details:\n$output\n"
 fi
 
 printf "From: $send_from\nTo: $send_to\nSubject: $Subject\n\n$Details\n" | ssmtp -t
