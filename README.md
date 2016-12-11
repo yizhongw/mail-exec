@@ -61,7 +61,7 @@ A command utility that runs your job and sends email to you when it's done.
 
 ![](https://github.com/EastonWang/mail-exec/blob/master/success.png) 
 
-* Of course, you will get a fail message like this if your program fails:
+* Of course, you will get a fail email with error message like this if your program fails:
 
 ![](https://github.com/EastonWang/mail-exec/blob/master/fail.png) 
 
