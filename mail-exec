@@ -5,10 +5,6 @@
 [[ -z "$send_from" ]] && { echo -n "Your smtp authorization email adress (find it at /etc/ssmtp/ssmtp.conf): " >&2; read send_from; }
 [[ -z "$send_to" ]] && { echo -n "Email address you want to notify: " >&2; read send_to;}
 
-# Message template
-SuccessMsg="Your program with command \"$1\" and pid $$ succeeded on your machine \"`hostname`\""
-FailMsg="Your program with command \"$1\" and pid $$ failed on your machine \"`hostname`\""
-
 # help message
 USAGE="Usage: $0 [COMMAND]"
 
@@ -18,10 +14,16 @@ then
     exit
 fi
 
-
-if sh -c "$*"
+# execute and send email
+if ("$@" 2>/tmp/mail-exec.err)
 then
-    printf "From: $send_from\nTo: $send_to\nSubject: $SuccessMsg\n" | ssmtp -t
+    Subject="Command succeeded: $@"
+    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\n"
 else
-    printf "From: $send_from\nTo: $send_to\nSubject: $FailMsg\n" | ssmtp -t
+    Subject="Command failed: $@"
+    err_msg=$(</tmp/mail-exec.err)
+    printf "$err_msg\n" >&2
+    Details="Command: $@ \nPid: $$ \nMachine: `hostname`\nFinish at:`date +%H:%M:%S,\ %Y%m%d`\nError details:\n$err_msg\n"
 fi
+
+printf "From: $send_from\nTo: $send_to\nSubject: $Subject\n\n$Details\n" | ssmtp -t
